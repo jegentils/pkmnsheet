@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un dresseur - PKMNSheet{% endblock %}
+
+{% block body %}
+    <main>
+        <h1>Créer un dresseur</h1>
+        <p>Répartis exactement 15 points entre les cinq statistiques. Chacune doit être comprise entre 1 et 5.</p>
+
+        {{ form_start(form) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.name) }}
+            {{ form_row(form.lastname) }}
+            {{ form_row(form.genre) }}
+            {{ form_row(form.str) }}
+            {{ form_row(form.dex) }}
+            {{ form_row(form.con) }}
+            {{ form_row(form.end) }}
+            {{ form_row(form.vol) }}
+            <button type="submit">Créer le dresseur</button>
+        {{ form_end(form) }}
+
+        <p><a href="{{ path('app_dresseur_index') }}">Annuler</a></p>
+    </main>
+{% endblock %}

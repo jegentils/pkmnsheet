@@ -5,5 +5,14 @@
 {% block body %}
     <main>
         <h1>Bienvenue sur PKMNSheet</h1>
+        {% if app.user %}
+            <p>Connecté·e en tant que {{ app.user.userIdentifier }}.</p>
+            <p><a href="{{ path('app_account') }}">Mon compte</a></p>
+            <p><a href="{{ path('app_dresseur_index') }}">Mes dresseurs</a></p>
+            <p><a href="{{ path('app_logout') }}">Se déconnecter</a></p>
+        {% else %}
+            <p><a href="{{ path('app_login') }}">Se connecter</a></p>
+            <p><a href="{{ path('app_register') }}">Créer un compte</a></p>
+        {% endif %}
     </main>
 {% endblock %}

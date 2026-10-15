@@ -19,6 +19,56 @@
         {% endif %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% set is_auth_page = app.request.attributes.get('_route') in ['app_login', 'app_register'] %}
+        <div class="app-shell{% if is_auth_page %} app-shell--auth{% endif %}">
+            <aside class="sidebar{% if is_auth_page %} sidebar--auth{% endif %}">
+                <a class="brand" href="{{ path('app_home') }}">Pokemon Quest, les fiches de jeux de roles.</a>
+
+                {% if app.request.attributes.get('_route') == 'app_login' %}
+                    <section class="sidebar-intro">
+                        <h2>Ravi de te revoir !</h2>
+                        <p>Connecte-toi pour retrouver tes dresseurs, gérer leurs équipes et reprendre ton aventure.</p>
+                    </section>
+                {% elseif app.request.attributes.get('_route') == 'app_register' %}
+                    <section class="sidebar-intro">
+                        <h2>Prépare ta prochaine aventure</h2>
+                        <p>Crée ton compte pour créer tes dresseurs, vivre des aventure tout en gardant fiches au même endroit.</p>
+                    </section>
+                {% endif %}
+
+                <nav class="sidebar-nav" aria-label="Navigation principale">
+                    {% if app.user %}
+                        <a href="{{ path('app_home') }}" {% if app.request.attributes.get('_route') == 'app_home' %}aria-current="page"{% endif %}>
+                            Accueil
+                        </a>
+                        <a href="{{ path('app_account') }}" {% if app.request.attributes.get('_route') == 'app_account' %}aria-current="page"{% endif %}>
+                            Mon compte
+                        </a>
+                        <a href="{{ path('app_dresseur_index') }}" {% if app.request.attributes.get('_route') == 'app_dresseur_index' %}aria-current="page"{% endif %}>
+                            Mes dresseurs
+                        </a>
+                        <a href="{{ path('app_dresseur_new') }}" {% if app.request.attributes.get('_route') == 'app_dresseur_new' %}aria-current="page"{% endif %}>
+                            Créer un dresseur
+                        </a>
+                        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}" {% if app.request.attributes.get('_route') == 'app_login' %}aria-current="page"{% endif %}>
+                            Se connecter
+                        </a>
+                        <a href="{{ path('app_register') }}" {% if app.request.attributes.get('_route') == 'app_register' %}aria-current="page"{% endif %}>
+                            Créer un compte
+                        </a>
+                    {% endif %}
+                </nav>
+
+                {% if app.user %}
+                    <p class="sidebar-user">{{ app.user.userIdentifier }}</p>
+                {% endif %}
+            </aside>
+
+            <div class="page-content{% if is_auth_page %} page-content--auth{% endif %}">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
     </body>
 </html>

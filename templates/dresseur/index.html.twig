@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes dresseurs - PKMNSheet{% endblock %}
+
+{% block body %}
+    <main>
+        <header class="page-heading">
+            <h1>Mes dresseurs</h1>
+            <a class="button" href="{{ path('app_dresseur_new') }}">Créer un dresseur</a>
+        </header>
+
+        {% for message in app.flashes('success') %}
+            <p role="status">{{ message }}</p>
+        {% endfor %}
+
+        {% if dresseurs is empty %}
+            <p>Tu n’as pas encore de dresseur.</p>
+        {% else %}
+            <ul>
+                {% for dresseur in dresseurs %}
+                    <li>
+                        <article>
+                            <h2>{{ dresseur.name }} {{ dresseur.lastname }}</h2>
+                            {% if dresseur.genre %}
+                                <p>Genre : {{ dresseur.genre }}</p>
+                            {% endif %}
+                            <dl>
+                                <dt>Force</dt><dd>{{ dresseur.str }}</dd>
+                                <dt>Dextérité</dt><dd>{{ dresseur.dex }}</dd>
+                                <dt>Constitution</dt><dd>{{ dresseur.con }}</dd>
+                                <dt>Endurance</dt><dd>{{ dresseur.end }}</dd>
+                                <dt>Volonté</dt><dd>{{ dresseur.vol }}</dd>
+                                <dt>Argent</dt><dd>{{ dresseur.money }}</dd>
+                                <dt>Expérience</dt><dd>{{ dresseur.xp }}</dd>
+                            </dl>
+
+                            <h3>Équipe actuelle</h3>
+                            <ol>
+                                {% for pokemon in dresseur.equipeActuelle %}
+                                    <li>
+                                        {% if pokemon %}
+                                            #{{ pokemon.number }} {{ pokemon.name }}
+                                        {% else %}
+                                            Emplacement vide
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ol>
+
+                            <h3>Tous les Pokémon attrapés ({{ dresseur.pokemon|length }})</h3>
+                            {% if dresseur.pokemon is empty %}
+                                <p>Ce dresseur n’a pas encore attrapé de Pokémon.</p>
+                            {% else %}
+                                <ul>
+                                    {% for pokemon in dresseur.pokemon %}
+                                        <li>
+                                            #{{ pokemon.number }} {{ pokemon.name }}
+                                            {% if pokemon.genre %}({{ pokemon.genre }}){% endif %}
+                                            {% if pokemon.nature %} — Nature : {{ pokemon.nature }}{% endif %}
+                                            {% if pokemon.heldItem %} — Objet : {{ pokemon.heldItem }}{% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </article>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <p><a href="{{ path('app_account') }}">Retour à mon compte</a></p>
+    </main>
+{% endblock %}

@@ -1,3 +1,162 @@
 body {
-    background-color: skyblue;
+    margin: 0;
+    background-color: lightgray;
+    color: #172b3a;
+    font-family: system-ui, sans-serif;
+}
+
+.app-shell {
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    display: flex;
+    width: 15rem;
+    flex-direction: column;
+    gap: 2rem;
+    box-sizing: border-box;
+    padding: 1.5rem 1rem;
+    background-image: url("../image/Temple.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left;
+}
+
+.sidebar--auth {
+    width: min(42vw, 38rem);
+    justify-content: space-between;
+    padding: clamp(2rem, 5vw, 5rem) clamp(1.5rem, 4vw, 4rem);
+    background-image:
+        linear-gradient(135deg, rgb(15 32 48 / 82%), rgb(15 32 48 / 52%)),
+        url("../image/Temple.png");
+    color: #fff;
+}
+
+.sidebar-intro {
+    max-width: 32rem;
+    margin-block: auto;
+    padding-block: 3rem;
+}
+
+.sidebar-intro h2 {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.1;
+}
+
+.sidebar-intro p {
+    margin: 0;
+    color: #e7f0f7;
+    font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+    line-height: 1.6;
+}
+
+.page-content--auth {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    margin-left: min(42vw, 38rem);
+}
+
+.page-content--auth > main {
+    width: min(100%, 32rem);
+}
+
+.brand {
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.sidebar-nav {
+    display: grid;
+    gap: 0.4rem;
+}
+
+.sidebar-nav a {
+    padding: 0.7rem 0.8rem;
+    border-radius: 0.4rem;
+    color: #e7f0f7;
+    text-decoration: none;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav a[aria-current="page"] {
+    background: #2c5273;
+    color: #fff;
+}
+
+.sidebar-user {
+    overflow-wrap: anywhere;
+    margin-top: auto;
+    color: #c5d7e5;
+    font-size: 0.9rem;
+}
+
+.page-content {
+    min-height: 100vh;
+    box-sizing: border-box;
+    margin-left: 15rem;
+    padding: 2rem;
+}
+
+.page-heading {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.page-heading h1 {
+    margin: 0;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.5rem 0.8rem;
+    border-radius: 0.3rem;
+    background: #1d4ed8;
+    color: white;
+    text-decoration: none;
+}
+
+@media (max-width: 700px) {
+    .sidebar {
+        position: static;
+        width: auto;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .sidebar--auth {
+        min-height: 24rem;
+        padding: 1.5rem;
+    }
+
+    .sidebar-intro {
+        margin-block: 1.5rem;
+        padding-block: 1rem;
+    }
+
+    .sidebar-nav {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .sidebar-user {
+        margin: 0;
+    }
+
+    .page-content {
+        min-height: auto;
+        margin-left: 0;
+        padding: 1.25rem;
+    }
+
+    .page-content--auth {
+        min-height: auto;
+        margin-left: 0;
+    }
 }
