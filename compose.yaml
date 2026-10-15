@@ -1,5 +1,26 @@
 
 services:
+  app:
+    build:
+      context: .
+    restart: unless-stopped
+    environment:
+      APP_ENV: "${APP_ENV:-dev}"
+      APP_SECRET: "${APP_SECRET:-pkmnsheet-local-development-secret}"
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-!ChangeMe!}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-16}&charset=utf8"
+    depends_on:
+      database:
+        condition: service_healthy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=${TRAEFIK_NETWORK:-traefik_network}"
+      - "traefik.http.routers.pkmnsheet.rule=Host(`pkmnsheet.localhost`)"
+      - "traefik.http.routers.pkmnsheet.entrypoints=web"
+      - "traefik.http.services.pkmnsheet.loadbalancer.server.port=80"
+    networks:
+      - default
+      - traefik
+
 ###> doctrine/doctrine-bundle ###
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
@@ -23,3 +44,8 @@ volumes:
 ###> doctrine/doctrine-bundle ###
   database_data:
 ###< doctrine/doctrine-bundle ###
+
+networks:
+  traefik:
+    external: true
+    name: ${TRAEFIK_NETWORK:-traefik_network}
