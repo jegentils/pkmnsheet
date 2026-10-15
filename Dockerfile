@@ -1,8 +1,8 @@
 FROM php:8.4-apache
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libicu-dev libpq-dev unzip \
-    && docker-php-ext-install -j"$(nproc)" intl pdo_pgsql \
+    && apt-get install -y --no-install-recommends libicu-dev unzip \
+    && docker-php-ext-install -j"$(nproc)" intl pdo_mysql \
     && a2enmod rewrite \
     && sed -ri 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
     && printf '<Directory /var/www/html/public>\n    AllowOverride All\n    Require all granted\n    FallbackResource /index.php\n</Directory>\n' > /etc/apache2/conf-available/symfony.conf \
